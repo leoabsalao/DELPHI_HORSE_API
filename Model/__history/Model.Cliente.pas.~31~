@@ -1,0 +1,97 @@
+unit Model.Cliente;
+
+interface
+
+uses FireDAC.Comp.Client, Data.DB, System.SysUtils, Model.Connection;
+
+// Criado a classe de clientes.
+type
+    TCliente = class
+    private
+        FID_CLIENTE: Integer;
+        FNOME: string;
+        FEMAIL: string;
+        FFONE: string;
+    public
+        constructor Create;
+        destructor Destroy; override;
+        property ID_CLIENTE : Integer read FID_CLIENTE write FID_CLIENTE;
+        property NOME : string read FNOME write FNOME;
+        property EMAIL : string read FEMAIL write FEMAIL;
+        property FONE : string read FFONE write FFONE;
+
+        function ListarCliente(order_by: string; out erro: string): TFDQuery;
+        function Inserir(out erro: string): Boolean;
+        function Excluir(out erro: string): Boolean;
+        function Editar(out erro: string): Boolean;
+end;
+
+implementation
+
+{ TCliente }
+
+constructor TCliente.Create;
+begin
+  Model.Connection.Connect;
+end;
+
+destructor TCliente.Destroy;
+begin
+  Model.Connection.Disconect;
+end;
+
+function TCliente.Editar(out erro: string): Boolean;
+begin
+
+end;
+
+function TCliente.Excluir(out erro: string): Boolean;
+begin
+
+end;
+
+function TCliente.Inserir(out erro: string): Boolean;
+begin
+
+end;
+
+function TCliente.ListarCliente(order_by: string;
+  out erro: string): TFDQuery;
+var
+   query : TFDQuery;
+begin
+   try
+       query := TFDQuery.Create(nil);
+       query.Connection := Model.Connection.FConnection;
+       with query do
+       begin
+         Active := false;
+         SQL.Clear;
+         SQL.Add('Select * from TAB_CLIENTE where 1 = 1');
+
+         if ID_CLIENTE > 0 then
+         begin
+            SQL.Add('and ID_CLIENTE = :ID_CLIENTE');
+            ParamByName('ID_CLIENTE').Value := ID_CLIENTE;
+         end;
+
+         if order_by = '' then
+            SQL.Add('Order By NOME')
+         else
+            SQL.Add('Order By '+ order_by);
+
+         Active := true;
+       end;
+
+       erro := '';
+       Result := query;
+   except on ex:exception do
+     begin
+       erro := 'Erro ao consultar o cliente' + ex.Message;
+       Result := nil;
+     end;
+   end;
+
+end;
+
+end.

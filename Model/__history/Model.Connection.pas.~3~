@@ -1,0 +1,10 @@
+unit Model.Connection;
+
+interface
+
+uses
+  FireDAC.DApt, FireDAC.Stan.Option;
+
+implementation
+
+end.

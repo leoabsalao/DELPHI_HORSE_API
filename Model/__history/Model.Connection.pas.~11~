@@ -1,0 +1,46 @@
+unit Model.Connection;
+
+interface
+
+uses
+  FireDAC.DApt, FireDAC.Stan.Option, FireDAC.Stan.Intf, FireDAC.UI.Intf,
+  FireDAC.Stan.Error, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, Data.DB, FireDAC.Comp.Client,
+  FireDAC.Phys.FB, FireDAC.Phys.FBDef, System.Classes, System.IniFiles,
+  System.SysUtils;
+
+var
+  FConnection : TFDConnection;
+
+function SetupConnection(FConn: TFDConnection): String;
+function Connect: TFDConnection;
+procedure Disconnect;
+
+implementation
+
+function SetupConnection(FConn: TFDConnection): String;
+var
+  arq_ini: string;
+  ini: TInifile;
+begin
+  try
+    try
+      arq_ini := GetCurrentDir + '\ServerHorse.ini';
+      if not FileExists(arq_ini) then
+      begin
+        Result := 'Arquivo INI não encontrado: '+arq_ini;
+
+      end;
+
+
+    finally
+
+    end;
+  finally
+
+  end;
+
+end;
+
+end.

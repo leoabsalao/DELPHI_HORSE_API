@@ -1,0 +1,46 @@
+program backEnd;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses Horse, System.SysUtils, System.JSON, Horse.Jhonson;
+
+begin
+  THorse.Use(Jhonson());
+
+  // API - Rotas
+  THorse.Get('/cliente',
+  procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+  begin
+    Writeln('Request GET /cliente');
+    Res.Send('Listar clientes...');
+  end);
+
+  THorse.Post('/cliente',
+  procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+  begin
+    Writeln('Request POST /cliente');
+    Res.Send('Cadastrar clientes...');
+  end);
+
+  THorse.Delete('/cliente',
+  procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+  begin
+    Writeln('Request DELETE /cliente');
+    Res.Send('Deletar clientes...');
+  end);
+
+  THorse.Put('/cliente',
+  procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+  begin
+    Writeln('Request PUT /cliente');
+    Res.Send('Atualizar clientes...');
+  end);
+
+  // Configuração de porta
+  THorse.Listen(3000, procedure(Horse: THorse)
+  begin
+    Writeln('Servidor escutando na porta: '+ Horse.Port.ToString);
+  end);
+end.
